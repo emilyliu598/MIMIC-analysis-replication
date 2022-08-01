@@ -1,5 +1,5 @@
 WITH t1 AS ( 
-  --- laboratory results table (SAPS-II: WBC, Sodium, Potassium, BUN, BIC. SOFA: Creatinine, Platelets)
+  --- first 24 hours ICU laboratory results (SAPS-II: WBC, Sodium, Potassium, BUN, BIC. SOFA: Creatinine, Platelets)
   SELECT c.*, fdl.wbc_max AS wbc_icu, 
   fdl.sodium_min AS sodium_icu, fdl.potassium_max AS potassium_icu, 
   fdl.bun_max AS bun_icu, fdl.bicarbonate_min AS bicarbonate_icu, 
