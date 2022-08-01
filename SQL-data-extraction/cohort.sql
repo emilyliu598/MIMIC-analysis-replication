@@ -94,4 +94,4 @@ FROM t10
 
 SELECT DISTINCT subject_id, hadm_id, stay_id, anchor_age, first_icu_admission, itemid, valuenum, baseline_lab_value, lab_value_within_first_day_icu_adm, bmi
 FROM t11
-WHERE bmi IS NOT NULL
+WHERE bmi IS NOT NULL --- AND baseline_lab_value = 1
