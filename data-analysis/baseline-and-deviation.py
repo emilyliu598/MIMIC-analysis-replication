@@ -74,7 +74,7 @@ mytable = TableOne(df_potassium, columns=columns, groupby=groupby, pval=True)
 print(mytable.tabulate(tablefmt="github"))
 
 # BUN
-df_BUN["bun_deviation"] = df_BUN["bun_icu"] - df_BUN["lab_value"]
+df_BUN["bun_deviation"] = np.log10(df_BUN["bun_icu"]) - np.log10(df_BUN["lab_value"])
 columns =["bun_deviation"]
 groupby = 'bmi_dummy'
 mytable = TableOne(df_BUN, columns=columns, groupby=groupby, pval=True)
@@ -88,7 +88,7 @@ mytable = TableOne(df_BIC, columns=columns, groupby=groupby, pval=True)
 print(mytable.tabulate(tablefmt="github"))
 
 # Creatinine
-df_creatinine["creatinine_deviation"] = df_creatinine["creatinine_icu"] - df_creatinine["lab_value"]
+df_creatinine["creatinine_deviation"] = np.log10(df_creatinine["creatinine_icu"]) - np.log10(df_creatinine["lab_value"])
 columns =["creatinine_deviation"]
 groupby = 'bmi_dummy'
 mytable = TableOne(df_creatinine, columns=columns, groupby=groupby, pval=True)
