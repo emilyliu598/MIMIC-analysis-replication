@@ -15,7 +15,7 @@ Variable name | Normal Weight | Obese | p-value
 $\Delta$ WBC, mean (SD) | 6.4 (9.7) | 7.8 (10.0) | 0.013
 $\Delta$ Sodium, mean (SD) | -1.7 (4.4) | -2.0 (3.9) | 0.322
 $\Delta$ Potassium, mean (SD) | 0.4 (0.7) | 0.5 (0.7) | 0.002
-$\Delta$ BUN, mean (SD) | 1.5 (14.2) | 2.9 (14.8) | 0.076
+$\Delta$ log(BUN), mean (SD) | 0.0 (0.2) | 0.0 (0.2) | 0.814
 $\Delta$ BIC, mean (SD) | -2.8 (4.2) | -3.6 (3.6) | <0.001
-$\Delta$ Creatinine, mean (SD) | 0.0 (0.8) | 0.2 (0.8) | <0.001
+$\Delta$ log(Creatinine), mean (SD) | 0.0 (0.2) | 0.0 (0.2) | 0.016
 $\Delta$ Platelets, mean (SD) | -50.5 (92.2) | -49.1 (75.9) | 0.794
