@@ -21,14 +21,22 @@ FROM t1
 (
 SELECT DISTINCT subject_id, hadm_id, charttime AS lab_value_charttime, itemid, valuenum
 FROM `physionet-data.mimic_hosp.labevents` le
-WHERE itemid IN (51300,51301,50824,50983,50822,50971, 51006, 50803,50882,50912,51081,51265)
+WHERE itemid IN (51300,51301,50824,50983,50822,50971,51006, 50803,50882,50912,51081,51265)
 )
+
+, avg_valuenum AS 
+(
+SELECT subject_id, hadm_id, lab_value_charttime, itemid, AVG(valuenum) AS avg_value
+FROM t3
+GROUP BY subject_id, hadm_id, lab_value_charttime, itemid
+)
+
 , t4 AS --- combine
 (
-SELECT t2.*, t3.lab_value_charttime, t3.itemid, t3.valuenum
+SELECT t2.*, a_value.lab_value_charttime, a_value.itemid, a_value.avg_value
 FROM t2
-INNER JOIN t3 
-ON t2.subject_id = t3.subject_id AND t2.hadm_id = t3.hadm_id
+LEFT JOIN avg_valuenum a_value
+ON t2.subject_id = a_value.subject_id AND t2.hadm_id = a_value.hadm_id
 )
 , t5 AS --- filter age >= 16 and first_icu_admission
 (
@@ -92,6 +100,7 @@ SELECT t10.*, weight_avg/(height_max*height_max/10000) as bmi
 FROM t10
 )
 
-SELECT DISTINCT subject_id, hadm_id, stay_id, anchor_age, first_icu_admission, itemid, valuenum, baseline_lab_value, lab_value_within_first_day_icu_adm, bmi
+SELECT DISTINCT subject_id, hadm_id, stay_id, anchor_age, first_icu_admission, itemid, AVG(avg_value) AS lab_value, baseline_lab_value, lab_value_within_first_day_icu_adm, bmi
 FROM t11
 WHERE bmi IS NOT NULL --- AND baseline_lab_value = 1
+GROUP BY subject_id, hadm_id, stay_id, anchor_age, first_icu_admission, itemid, baseline_lab_value, lab_value_within_first_day_icu_adm, bmi 
