@@ -6,7 +6,7 @@ WITH t1 AS (
   fdl.creatinine_max AS creatinine_icu, 
   fdl.platelets_min AS platelets_icu
   FROM `physionet-data.mimic_derived.first_day_lab` fdl
-  INNER JOIN `emilyliu-chl7001h.cohort1.cohort` c
+  RIGHT JOIN `emilyliu-chl7001h.cohort1.cohort` c
   ON fdl.subject_id = c.subject_id AND fdl.stay_id = c.stay_id
 )
 
@@ -14,17 +14,19 @@ WITH t1 AS (
   --- sapsii score
   SELECT t1.*, sap.sapsii
   FROM `physionet-data.mimic_derived.sapsii` sap
-  INNER JOIN t1
+  RIGHT JOIN t1
   ON sap.subject_id = t1.subject_id AND sap.hadm_id = t1.hadm_id AND sap.stay_id = t1.stay_id
 )
-
 , t3 AS (
   --- sofa score
-  SELECT t2.*, sofa.sofa_24hours
+  SELECT stay_id, AVG(sofa.sofa_24hours) AS sofa_score
   FROM `physionet-data.mimic_derived.sofa` sofa
-  INNER JOIN t2
-  ON t2.stay_id = sofa.stay_id
+  GROUP BY stay_id
 )
 
-SELECT *
+
+SELECT t2.*, t3.sofa_score
 FROM t3
+RIGHT JOIN t2
+ON t3.stay_id = t2.stay_id
+
