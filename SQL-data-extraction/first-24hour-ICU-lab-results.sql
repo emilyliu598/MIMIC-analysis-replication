@@ -6,7 +6,7 @@ WITH t1 AS (
   fdl.creatinine_max AS creatinine_icu, 
   fdl.platelets_min AS platelets_icu
   FROM `physionet-data.mimic_derived.first_day_lab` fdl
-  INNER JOIN `emilyliu-chl7001h.cohort1.cohort` c --- tables from cohort extraction
+  INNER JOIN `emilyliu-chl7001h.cohort1.cohort` c --- table from cohort extraction
   ON fdl.subject_id = c.subject_id AND fdl.stay_id = c.stay_id
 )
 SELECT *
